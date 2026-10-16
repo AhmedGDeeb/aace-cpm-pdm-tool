@@ -1,0 +1,268 @@
+/* ============================================================
+   RESET + THEME
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #1e1e2e;
+  --panel: #282a3a;
+  --panel2: #33364a;
+  --border: #444;
+  --text: #e0e0e0;
+  --muted: #999;
+  --accent: #4a9eff;
+  --critical: #ff4d4d;
+  --normal: #4a9eff;
+  --selected: #ffb84d;
+  --link: #888;
+}
+
+html, body {
+  height: 100%;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+body { display: flex; flex-direction: column; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+#header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 16px; background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+#header .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 16px;
+}
+#header .logo .brand-logo {
+  height: 24px;
+  width: auto;
+}
+#projectName {
+  background: var(--panel2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 4px 10px; flex: 1; max-width: 320px;
+}
+.header-actions { margin-left: auto; display: flex; gap: 6px; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+button {
+  background: var(--panel2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 6px 12px; cursor: pointer; font-size: 13px;
+}
+button:hover { background: #3e4258; }
+button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+#toolbar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px; background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+.view-switch { display: flex; }
+.view-switch button { border-radius: 4px; }
+.spacer { flex: 1; }
+.toggle { font-size: 13px; display: flex; align-items: center; gap: 6px; }
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+#main { flex: 1; display: flex; overflow: hidden; }
+
+#left, #right {
+  width: 260px; background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+#right { border-right: none; border-left: 1px solid var(--border); }
+
+.panel { padding: 10px; border-bottom: 1px solid var(--border); }
+.panel h3 {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--muted); margin-bottom: 8px;
+}
+
+/* ============================================================
+   TASK LIST
+   ============================================================ */
+#taskList { list-style: none; }
+#taskList li {
+  padding: 6px 8px; border-radius: 4px; cursor: pointer;
+  font-size: 13px; display: flex; align-items: center; gap: 6px;
+}
+#taskList li:hover { background: var(--panel2); }
+#taskList li.selected { background: var(--selected); color: #000; }
+#taskList li .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--normal); flex-shrink: 0;
+}
+#taskList li.critical .dot { background: var(--critical); }
+#taskList li .dur { margin-left: auto; color: var(--muted); font-size: 11px; }
+#taskList li.selected .dur { color: #333; }
+
+/* ============================================================
+   PROPERTIES PANEL
+   ============================================================ */
+#propsContent label {
+  display: block; font-size: 12px; color: var(--muted);
+  margin-top: 8px; margin-bottom: 3px;
+}
+#propsContent input, #propsContent textarea, #propsContent select {
+  width: 100%; background: var(--panel2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 5px 8px; font-size: 13px; font-family: inherit;
+}
+#propsContent .row { display: flex; gap: 6px; }
+#propsContent button.danger {
+  background: #7a2a2a; border-color: #a33;
+  margin-top: 12px; width: 100%;
+}
+#propsContent .note {
+  font-size: 11px; color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   CANVAS WRAPPER
+   ============================================================ */
+#canvasWrap { flex: 1; position: relative; overflow: auto; background: #181926; }
+#canvas { display: block; min-width: 100%; min-height: 100%; }
+
+/* ============================================================
+   PDM NODE (AACE style)
+   ============================================================ */
+.node { cursor: move; }
+.node .box-outer { fill: var(--panel2); stroke: var(--accent); stroke-width: 2; }
+.node.critical .box-outer { stroke: var(--critical); }
+.node.selected .box-outer { stroke: var(--selected); stroke-width: 3; }
+
+.node .head { fill: var(--accent); }
+.node.critical .head { fill: var(--critical); }
+
+.node .id-text  { fill: #fff; font-size: 11px; font-weight: 700; pointer-events: none; }
+.node .dur-text { fill: #e8e8e8; font-size: 11px; pointer-events: none; }
+.node .lbl {
+  fill: var(--muted);
+  font-size: 9px;
+  text-anchor: middle;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+}
+.node .val {
+  fill: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-anchor: middle;
+  pointer-events: none;
+}
+.node.critical .val { fill: #ffb0b0; }
+.node .cell-line { stroke: var(--border); stroke-width: 1; }
+.node.critical .cell-line { stroke: rgba(255, 77, 77, 0.5); }
+
+/* ============================================================
+   PDM EDGES
+   ============================================================ */
+.edge { stroke: var(--link); stroke-width: 2; fill: none; }
+.edge.critical { stroke: var(--critical); stroke-width: 2.5; }
+.edge-hit { stroke: transparent; stroke-width: 14; fill: none; cursor: pointer; }
+.edge-hit:hover + .edge { stroke: var(--selected); }
+
+/* ============================================================
+   RESULTS + LEGEND
+   ============================================================ */
+#results { font-size: 13px; line-height: 1.6; }
+#results .kv { display: flex; justify-content: space-between; }
+#results .kv span:first-child { color: var(--muted); }
+#results .cp { color: var(--critical); font-weight: bold; }
+
+.legend { font-size: 12px; }
+.legend div { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+.swatch.critical { background: var(--critical); }
+.swatch.normal { background: var(--normal); }
+.swatch.selected { background: var(--selected); }
+.swatch.link { background: var(--link); height: 3px; }
+
+/* ============================================================
+   FOOTER  (single definition — do not duplicate)
+   ============================================================ */
+#status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+.footer-left  { flex: 0 0 auto; }
+.footer-center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.footer-right {
+  flex: 0 0 auto;
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* AACE logo strip */
+.aace-logo {
+  height: 26px;
+  width: auto;
+  filter: brightness(1.05);
+}
+.aace-name {
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Credits */
+.footer-right .credit {
+  color: var(--text);
+  font-size: 12px;
+  display: block;
+}
+.footer-right .credit strong {
+  color: #fff;
+  letter-spacing: 0.2px;
+}
+.footer-right .role {
+  color: var(--muted);
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.footer-right .copyright {
+  display: block;
+  margin-top: 2px;
+  color: #7a7a8a;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 900px) {
+  #status { flex-direction: column; align-items: stretch; text-align: center; }
+  .footer-right { text-align: center; }
+}
